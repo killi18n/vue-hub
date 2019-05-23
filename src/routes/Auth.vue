@@ -1,5 +1,5 @@
 <template>
-  <div>Main.vue</div>
+  <div>Auth</div>
 </template>
 
 <script lang="ts">
@@ -7,12 +7,13 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 
 @Component
-class Main extends Vue {}
+class Auth extends Vue {}
 
-export default Main;
+export default Auth;
 </script>
 
 <style lang="scss" scoped>
+.auth {
+}
 </style>
-
 
