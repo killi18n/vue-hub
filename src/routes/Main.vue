@@ -5,9 +5,16 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { mapGetters } from 'vuex';
 
 @Component
-class Main extends Vue {}
+class Main extends Vue {
+    private mounted() {
+        if (!this.$store.state.auth.logged) {
+            this.$router.push({ name: 'auth', query: { type: 'login' } });
+        }
+    }
+}
 
 export default Main;
 </script>
