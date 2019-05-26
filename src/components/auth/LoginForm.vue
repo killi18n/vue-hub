@@ -14,6 +14,9 @@
     <div class="button-wrapper">
       <CustomButton title="LOGIN"/>
     </div>
+    <div class="description-wrapper">
+      <div class="description" v-on:click="this.moveToRegister">MOVE TO REGISTER</div>
+    </div>
   </div>
 </template>
 
@@ -33,6 +36,9 @@ import CustomButton from '@/components/common/Button.vue';
     },
     methods: {
         ...mapActions(['setUsername', 'setPassword']),
+        moveToRegister() {
+            this.$router.push({ name: 'auth', query: { type: 'register' } });
+        },
     },
 })
 class LoginForm extends Vue {}
@@ -79,6 +85,15 @@ export default LoginForm;
 
     .button-wrapper {
         margin-top: 1rem;
+    }
+
+    .description-wrapper {
+        margin-top: 1rem;
+        display: flex;
+        .description {
+            margin-left: auto;
+            cursor: pointer;
+        }
     }
 }
 </style>

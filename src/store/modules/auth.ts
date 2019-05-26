@@ -42,6 +42,9 @@ const actions = {
         const { value } = payload.target;
         commit('setPassword', { value });
     },
+    initializeInputs({ commit, state }: any) {
+        commit('initializeInputs');
+    },
 };
 
 const mutations = {
@@ -53,6 +56,10 @@ const mutations = {
     },
     setPassword(state: AuthState, { value }: any) {
         state.input.password = value;
+    },
+    initializeInputs(state: AuthState) {
+        state.input.username = '';
+        state.input.password = '';
     },
 };
 
