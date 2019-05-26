@@ -1,7 +1,10 @@
 <template>
   <div class="form-wrapper">
     <div v-if="this.type === 'login'">
-      <LoginForm :username="username" :password="password"/>
+      <LoginForm/>
+    </div>
+    <div v-if="this.type === 'oauth'">
+      <OAuthProcessor :code="code"/>
     </div>
   </div>
 </template>
@@ -9,34 +12,29 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { mapGetters, mapActions } from 'vuex';
 import LoginForm from '@/components/auth/LoginForm.vue';
+import OAuthProcessor from '@/components/auth/OAuthProcessor.vue';
 
 @Component({
     components: {
         LoginForm,
-    },
-    computed: {
-        ...mapGetters({
-            username: 'getUsername',
-            password: 'getPassword',
-        }),
+        OAuthProcessor,
     },
     data() {
         return {
             type: '',
+            code: '',
         };
     },
-    methods: {
-        ...mapActions(['initializeInputs']),
-    },
     beforeRouteUpdate(to, from, next) {
-        (this as any).initializeInputs();
         (this as any).type = to.query.type;
         next();
     },
     beforeMount() {
         (this as any).type = this.$router.currentRoute.query.type;
+        if (this.$router.currentRoute.query.code) {
+            (this as any).code = this.$router.currentRoute.query.code;
+        }
     },
 })
 class Auth extends Vue {}

@@ -1,9 +1,7 @@
+import axios from 'axios';
+
 export interface AuthState {
     logged: boolean;
-    input: {
-        username: string;
-        password: string;
-    };
 }
 
 interface AuthGetters {
@@ -12,38 +10,34 @@ interface AuthGetters {
 
 const initialState: AuthState = {
     logged: false,
-    input: {
-        username: '',
-        password: '',
-    },
 };
 
 const getters = {
     isLogged: (state: AuthState): boolean => {
         return state.logged;
     },
-    getUsername: (state: AuthState): string => {
-        return state.input.username;
-    },
-    getPassword: (state: AuthState): string => {
-        return state.input.password;
-    },
 };
 
 const actions = {
-    setLogged({ commit, state }: any, isLogged: boolean) {
-        commit('setLogged', isLogged);
+    setLogged({ commit, state }: any, payload: any) {
+        const { isLogged } = payload;
+        commit('setLogged', { isLogged });
     },
-    setUsername({ commit, state }: any, payload: any) {
-        const { value } = payload.target;
-        commit('setUsername', { value });
-    },
-    setPassword({ commit, state }: any, payload: any) {
-        const { value } = payload.target;
-        commit('setPassword', { value });
-    },
-    initializeInputs({ commit, state }: any) {
-        commit('initializeInputs');
+    async getGithubAuthentication({ commit, state }: any, payload: any) {
+        const { code } = payload;
+        try {
+            const res = await axios.post(
+                'https://github.com/login/oauth/access_token',
+                {
+                    code,
+                    client_id: process.env.VUE_APP_GITHUB_CLIENT_ID,
+                    client_secret: process.env.VUE_APP_GITHUB_CLIENT_SECRET,
+                }
+            );
+            commit('setGithubAuthentication', { res });
+        } catch (e) {
+            throw new Error(e);
+        }
     },
 };
 
@@ -51,15 +45,8 @@ const mutations = {
     setLogged(state: AuthState, { isLogged }: any) {
         state.logged = isLogged;
     },
-    setUsername(state: AuthState, { value }: any) {
-        state.input.username = value;
-    },
-    setPassword(state: AuthState, { value }: any) {
-        state.input.password = value;
-    },
-    initializeInputs(state: AuthState) {
-        state.input.username = '';
-        state.input.password = '';
+    setGithubAuthentication(state: AuthState, { res }: any) {
+        console.log(res);
     },
 };
 

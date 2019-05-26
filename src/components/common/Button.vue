@@ -1,10 +1,7 @@
 <template>
   <div>
     <div v-if="type === 'login'">
-      <a
-        href="#"
-        onClick="MyWindow=window.open('https://github.com/login/oauth/authorize?scope=user:email&client_id=github_client_id','MyWindow',width=600,height=300); return false;"
-      >Github Authentication</a>
+      <a :href="this.githubURL">Github Authentication</a>
     </div>
     <div v-else class="button">{{title}}</div>
   </div>
@@ -18,6 +15,13 @@ import Component from 'vue-class-component';
     props: {
         title: String,
         type: String,
+    },
+    computed: {
+        githubURL() {
+            return `https://github.com/login/oauth/authorize?scope=user:email&client_id=${
+                process.env.VUE_APP_GITHUB_CLIENT_ID
+            }`;
+        },
     },
 })
 class Button extends Vue {}

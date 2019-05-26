@@ -1,44 +1,20 @@
 <template>
   <div class="login-form">
     <div class="title">LOGIN</div>
-    <!-- <div class="contents">
-      <div class="input-with-label">
-        <div class="label">Username</div>
-        <input type="text" name="username" :value="this.$props.username" @input="setUsername">
-      </div>
-      <div class="input-with-label">
-        <div class="label">Password</div>
-        <input type="password" name="password" :value="this.$props.password" @input="setPassword">
-      </div>
-    </div>-->
     <div class="button-wrapper">
       <CustomButton title="LOGIN WITH GITHUB" type="login"/>
     </div>
-    <!-- <div class="description-wrapper">
-      <div class="description" v-on:click="this.moveToRegister">MOVE TO REGISTER</div>
-    </div>-->
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions } from 'vuex';
 import Component from 'vue-class-component';
 import CustomButton from '@/components/common/Button.vue';
 
 @Component({
     components: {
         CustomButton,
-    },
-    props: {
-        username: String,
-        password: String,
-    },
-    methods: {
-        ...mapActions(['setUsername', 'setPassword']),
-        moveToRegister() {
-            this.$router.push({ name: 'auth', query: { type: 'register' } });
-        },
     },
 })
 class LoginForm extends Vue {}
