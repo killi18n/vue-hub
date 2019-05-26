@@ -1,7 +1,7 @@
 <template>
   <div class="login-form">
     <div class="title">LOGIN</div>
-    <div class="contents">
+    <!-- <div class="contents">
       <div class="input-with-label">
         <div class="label">Username</div>
         <input type="text" name="username" :value="this.$props.username" @input="setUsername">
@@ -10,13 +10,13 @@
         <div class="label">Password</div>
         <input type="password" name="password" :value="this.$props.password" @input="setPassword">
       </div>
-    </div>
+    </div>-->
     <div class="button-wrapper">
-      <CustomButton title="LOGIN"/>
+      <CustomButton title="LOGIN WITH GITHUB" type="login"/>
     </div>
-    <div class="description-wrapper">
+    <!-- <div class="description-wrapper">
       <div class="description" v-on:click="this.moveToRegister">MOVE TO REGISTER</div>
-    </div>
+    </div>-->
   </div>
 </template>
 

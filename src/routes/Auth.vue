@@ -3,9 +3,6 @@
     <div v-if="this.type === 'login'">
       <LoginForm :username="username" :password="password"/>
     </div>
-    <div v-if="this.type === 'register'">
-      <RegisterForm :username="username" :password="password"/>
-    </div>
   </div>
 </template>
 
@@ -14,12 +11,10 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import { mapGetters, mapActions } from 'vuex';
 import LoginForm from '@/components/auth/LoginForm.vue';
-import RegisterForm from '@/components/auth/RegisterForm.vue';
 
 @Component({
     components: {
         LoginForm,
-        RegisterForm,
     },
     computed: {
         ...mapGetters({
