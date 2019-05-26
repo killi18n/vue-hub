@@ -1,7 +1,7 @@
 <template>
   <div class="form-wrapper">
     <div v-if="this.$router.currentRoute.query.type === 'login'">
-      <LoginForm/>
+      <LoginForm :username="username" :password="password"/>
     </div>
     <div v-if="this.$router.currentRoute.query.type === 'register'">
       <RegisterForm/>
@@ -12,6 +12,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { mapGetters } from 'vuex';
 import LoginForm from '@/components/auth/LoginForm.vue';
 import RegisterForm from '@/components/auth/RegisterForm.vue';
 
@@ -20,12 +21,14 @@ import RegisterForm from '@/components/auth/RegisterForm.vue';
         LoginForm,
         RegisterForm,
     },
+    computed: {
+        ...mapGetters({
+            username: 'getUsername',
+            password: 'getPassword',
+        }),
+    },
 })
-class Auth extends Vue {
-    // mounted() {
-    //     const { type } = this.$router.currentRoute.query;
-    // }
-}
+class Auth extends Vue {}
 
 export default Auth;
 </script>
