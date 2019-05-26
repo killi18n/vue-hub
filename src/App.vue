@@ -32,6 +32,8 @@ export default App;
 @import '@/styles/index.scss';
 
 main {
+    display: flex;
+    flex-direction: column;
     min-height: calc(100vh - 15rem);
 }
 </style>
