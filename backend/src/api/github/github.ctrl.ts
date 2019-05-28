@@ -5,6 +5,7 @@ import { Context } from 'koa';
 const { GITHUB_OAUTH_URL: OAuthURL } = process.env;
 
 export const authenticate = async (ctx: Context) => {
+    console.log('authenticate');
     const schema = Joi.object().keys({
         code: Joi.string().required(),
         clientId: Joi.string().required(),
@@ -22,18 +23,27 @@ export const authenticate = async (ctx: Context) => {
     const { code, clientId, clientSecret } = ctx.request.body;
     try {
         if (OAuthURL) {
-            const res = await axios.post(OAuthURL, {
-                code,
-                client_id: clientId,
-                client_secret: clientSecret,
-            });
+            const res = await axios.post(
+                OAuthURL,
+                {
+                    code,
+                    client_id: clientId,
+                    client_secret: clientSecret,
+                },
+                {
+                    headers: {
+                        accept: 'application/json',
+                    },
+                }
+            );
             const { data } = res;
             if (data) {
                 ctx.status = 200;
                 ctx.body = data;
+                return;
             }
-            return;
         }
+
         ctx.status = 400;
     } catch (e) {
         console.log(e);
