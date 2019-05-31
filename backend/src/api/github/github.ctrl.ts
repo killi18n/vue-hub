@@ -50,3 +50,24 @@ export const authenticate = async (ctx: Context) => {
         ctx.throw(e, 500);
     }
 };
+
+export const check = async (ctx: Context) => {
+    const { authorization } = ctx.headers;
+    if (!authorization) {
+        ctx.status = 401;
+        return;
+    }
+    try {
+        const res = await axios.get('https://api.github.com/user', {
+            headers: {
+                authorization,
+            },
+        });
+
+        ctx.body = res.data;
+        ctx.status = 200;
+    } catch (e) {
+        console.log(e);
+        ctx.throw(e, 401);
+    }
+};

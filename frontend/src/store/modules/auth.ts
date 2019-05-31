@@ -1,18 +1,15 @@
 import axios from 'axios';
+import { GetterTree } from 'vuex';
 
 export interface AuthState {
     logged: boolean;
-}
-
-interface AuthGetters {
-    isLogged: any;
 }
 
 const initialState: AuthState = {
     logged: false,
 };
 
-const getters = {
+const getters: GetterTree<any, {}> = {
     isLogged: (state: AuthState): boolean => {
         return state.logged;
     },
@@ -34,6 +31,25 @@ const actions = {
             commit('setGithubAuthentication', { res });
         } catch (e) {
             throw new Error(e);
+        }
+    },
+    async checkUser({ commit, state }: any, payload: any) {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            commit('setLogged', { isLogged: false });
+            return;
+        }
+        try {
+            const res = await axios.get('/api/github/check', {
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+            });
+            if (res.data) {
+                commit('setLogged', { isLogged: true });
+            }
+        } catch (e) {
+            commit('setLogged', { isLogged: false });
         }
     },
 };
