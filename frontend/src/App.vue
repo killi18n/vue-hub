@@ -24,7 +24,7 @@ import Footer from './components/common/Footer.vue';
         Footer,
     },
     methods: {
-        ...mapActions(['checkUser']),
+        ...mapActions(['checkUser', 'setLogged']),
     },
     computed: {
         ...mapGetters(['isLogged']),
@@ -38,6 +38,7 @@ import Footer from './components/common/Footer.vue';
             this.$router.push({ name: 'auth', query: { type: 'login' } });
             return;
         }
+        (this as any).setLogged({ isLogged: true });
         await (this as any).checkUser();
         if (!(this as any).isLogged) {
             localStorage.removeItem('token');
@@ -57,6 +58,11 @@ import Footer from './components/common/Footer.vue';
             await (this as any).checkUser();
             if (!(this as any).isLogged) {
                 localStorage.removeItem('token');
+                this.$router.push({ name: 'auth', query: { type: 'login' } });
+            }
+        },
+        isLogged(to, from) {
+            if (from && !to) {
                 this.$router.push({ name: 'auth', query: { type: 'login' } });
             }
         },

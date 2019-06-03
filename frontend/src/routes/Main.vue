@@ -7,13 +7,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 
 @Component
-class Main extends Vue {
-    // private mounted() {
-    //     if (!this.$store.state.auth.logged) {
-    //         this.$router.push({ name: 'auth', query: { type: 'login' } });
-    //     }
-    // }
-}
+class Main extends Vue {}
 
 export default Main;
 </script>

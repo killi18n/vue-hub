@@ -1,15 +1,26 @@
 <template>
   <div class="header">
     <router-link to="/" class="header-title">Vue Hub</router-link>
-    <button class="logout-button">LOGOUT</button>
+    <button v-if="this.isLogged" class="logout-button" v-on:click="this.logout">LOGOUT</button>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { mapActions, mapGetters } from 'vuex';
 
-@Component
+@Component({
+    methods: {
+        ...mapActions(['setLogged']),
+        logout() {
+            (this as any).setLogged({ isLogged: false });
+        },
+    },
+    computed: {
+        ...mapGetters(['isLogged']),
+    },
+})
 class Header extends Vue {}
 
 export default Header;

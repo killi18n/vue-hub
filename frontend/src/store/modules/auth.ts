@@ -56,6 +56,11 @@ const actions = {
 
 const mutations = {
     setLogged(state: AuthState, { isLogged }: any) {
+        if (!isLogged) {
+            if (localStorage.getItem('token')) {
+                localStorage.removeItem('token');
+            }
+        }
         state.logged = isLogged;
     },
     setGithubAuthentication(state: AuthState, { res }: any) {
