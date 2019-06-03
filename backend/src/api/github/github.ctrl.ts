@@ -5,7 +5,6 @@ import { Context } from 'koa';
 const { GITHUB_OAUTH_URL: OAuthURL } = process.env;
 
 export const authenticate = async (ctx: Context) => {
-    console.log('authenticate');
     const schema = Joi.object().keys({
         code: Joi.string().required(),
         clientId: Joi.string().required(),
